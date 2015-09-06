@@ -16,8 +16,9 @@ public class Pipeline {
         WordCounter wordCounter = new WordCounter();
         Map<String, Integer> wordCounts = wordCounter.count(words);
         for (String wordCount : wordCounts.keySet()) {
-            System.out.println(wordCounts.get(wordCount) + "\t" + wordCount);
+           System.out.println(wordCounts.get(wordCount) + "\t" + wordCount);
         }
+
         Pipeline pipeline = new Pipeline();
         Map<String, Integer> sortedCounts = pipeline.sortByValue(wordCounts);
         for (String word : sortedCounts.keySet()) {

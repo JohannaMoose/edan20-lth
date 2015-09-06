@@ -20,7 +20,6 @@ public class Normalize {
             if(words[i] != null)
                 System.out.println(words[i]);
         }
-
     }
 
 
@@ -28,6 +27,10 @@ public class Normalize {
         String[] words = getSentences(text);
         words = handleSentences(words);
         return words;
+    }
+
+    String[] tokenize(String text){
+        return null;
     }
 
     private String[] getSentences(String text) {
@@ -40,10 +43,10 @@ public class Normalize {
         String[] handledSentences = new String[sentneces.length];
         int counter = 0;
         for (int i = 0; i < sentneces.length; i++) {
-            String sentnece = sentneces[i];
-            sentnece = sentnece.replaceAll("\n", "");
-            if(sentnece != null && !sentnece.isEmpty() && sentnece.trim().length() > 0) {
-                handledSentences[counter] = "<s>" + sentnece.toLowerCase() + "</s>";
+            String sentence = sentneces[i];
+            sentence = sentence.replaceAll("\n", "");
+            if(sentence != null && !sentence.isEmpty() && sentence.trim().length() > 0) {
+                handledSentences[counter] = "<s>" + sentence.toLowerCase() + "</s>";
                 counter++;
             }
         }

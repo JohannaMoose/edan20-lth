@@ -16,13 +16,16 @@ public class MutualInfo {
         WordCounter wc = new WordCounter();
         Map<String, Integer> unigramCounts = wc.count(words);
         Map<String, Integer> bigramCounts = wc.countBigrams(words);
-
         MutualInfo mi = new MutualInfo();
         Map<String, Double> miScores = mi.compute(words.length, unigramCounts, bigramCounts);
         for (String bigram : miScores.keySet()) {
             String[] pair = bigram.split("\t");
             System.out.println(miScores.get(bigram) + "\t" + bigram + "\t" + bigramCounts.get(bigram) + "\t" + unigramCounts.get(pair[0]) + "\t" + unigramCounts.get(pair[1]));
         }
+
+        System.out.println("Number of unigrams: " + unigramCounts.size());
+        System.out.println("Number of bigrams: " + bigramCounts.size());
+        System.out.println("Number of theoretical bigrams: alot more (formula: \\frac{n!}{(n-r)!(r!))");
     }
 
     Map<String, Double> compute(int N, Map<String, Integer> unigramCounts, Map<String, Integer> bigramCounts) {
