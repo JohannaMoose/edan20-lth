@@ -19,8 +19,8 @@ public class Tokenizer {
     }
 
     public String[] tokenize(String text) {
-        //String [] words = text.split("[\\s\\-,;:!?.’\'«»()–...&‘’“”*—]+");
-        //String [] words = text.split("[^a-zåàâäæçéèêëîïôöœßùûüÿA-ZÅÀÂÄÆÇÉÈÊËÎÏÔÖŒÙÛÜŸ’\\-]+");
+        //String [] words = text.split("[\\s\\-,;:!?.ï¿½\'ï¿½ï¿½()ï¿½...&ï¿½ï¿½ï¿½ï¿½*ï¿½]+");
+        //String [] words = text.split("[^a-zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖŒï¿½ï¿½ÜŸï¿½\\-]+");
         //String [] words = text.split("\\W+"); // Not unicode friendly
         String[] words = text.split("\\P{L}+");
         return words;
@@ -31,15 +31,4 @@ public class Tokenizer {
         return words;
     }
 
-    public String[] tokenize(String[] text){
-        ArrayList<String> toknized = new ArrayList<String>();
-        for (int i = 0; i < text.length; i++) {
-            String[] part = text[i].split("\\P{L}+");
-            for (int j = 0; j < part.length; j++) {
-                toknized.add(part[j]);
-            }
-        }
-
-        return toknized.toArray(new String[toknized.size()]);
-    }
 }
