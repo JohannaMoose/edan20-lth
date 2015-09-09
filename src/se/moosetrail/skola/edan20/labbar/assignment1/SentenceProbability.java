@@ -104,24 +104,44 @@ public class SentenceProbability {
     }
 
     private void bigram(String[] sentenceWords) {
-        System.out.println("w_i \t w:(i+1) \t C(w_i,w_i+1) \t C(w_i) \t P(w_i+1|w_i)");
+        System.out.println("w_i \tw:(i+1) \tC(w_i,w_i+1) \tC(w_i) \t\tP(w_i+1|w_i)");
 
-        for (int i = 0; i < sentenceWords.length; i++) {
-
-
-
+        for (int i = 0; i < sentenceWords.length-1; i++) {
             String nextWord = "";
             if(i +1 < sentenceWords.length)
                 nextWord = sentenceWords[i+1];
 
             int occurencesOfWord = countBigram(sentenceWords[i], nextWord);
-            Double prob = probabilityOfUnigram(occurencesOfWord);
+            Double prob = probabilityOfBigram(occurencesOfWord);
+            boolean hasBackof = false;
+            if(occurencesOfWord == 0){
+                hasBackof = true;
+                prob = probabilityOfUnigram(countOfWord(nextWord));
+            }
             sentenceWordProb.add(prob);
+
+            StringBuilder sb = new StringBuilder();
+            if(sentenceWords[i].length() > 2)
+                sb.append(sentenceWords[i]+ " \t");
+            else
+                sb.append(sentenceWords[i]+ " \t\t");
+            if(nextWord.length() > 2)
+                sb.append(nextWord+ " \t\t");
+            else
+                sb.append(nextWord+ " \t\t\t");
+            sb.append(occurencesOfWord + " \t\t\t");
+            if(occurencesOfWord < 100)
+                sb.append("\t");
+            sb.append(countOfWord(sentenceWords[i]) + " \t\t");
+            if(countOfWord(sentenceWords[i]) < 100)
+                sb.append("\t");
+            if(hasBackof)
+                sb.append("backoff: ");
+            sb.append(prob);
 
             String output = String.format("%s \t %s \t\t %d \t %d \t %d \t %.6f", sentenceWords[i], nextWord, countBigram(sentenceWords[1], nextWord), occurencesOfWord, nbrOfWords, prob);
 
-
-            System.out.println(output);
+            System.out.println(sb.toString());
         }
     }
 
@@ -133,9 +153,9 @@ public class SentenceProbability {
         }
     }
 
-    float probabilityOfBigram(){
-
-
-        return -1;
+    Double probabilityOfBigram(int nbrOfOccurencesOfWord){
+            Double nbr = new Double(nbrOfOccurencesOfWord);
+            Double total = new Double(bigramCounts.size());
+            return nbr/ total;
     }
 }
