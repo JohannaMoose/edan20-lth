@@ -1,7 +1,6 @@
 package se.moosetrail.skola.edan20.labbar.assignment1;
 
 import lppp.chapter5.FileReader;
-import lppp.chapter5.Tokenizer;
 import lppp.chapter5.WordCounter;
 
 import java.io.IOException;
@@ -54,6 +53,8 @@ public class SentenceProbability {
 
         System.out.println("-----------------------------------------");
         System.out.println("Sannolikhet för meningen: " + calculateSentenceProbability());
+        System.out.println("Entropy för meningen: " + calculateEntropy(sentenceWords));
+        System.out.println("Perplexity för meningen: " + calulatePerplexity(sentenceWords));
     }
 
     private void unigram(String[] sentenceWords) {
@@ -103,6 +104,20 @@ public class SentenceProbability {
         return prob;
     }
 
+    private Double calculateEntropy(String[] sentenceWords){
+        Double log = Math.log(calculateSentenceProbability()) / Math.log(2);
+        Double mod = -1.0/sentenceWords.length;
+        return log*mod;
+    }
+
+    private Double calulatePerplexity   (String[] sentenceWords){
+
+
+        Double entr = calculateEntropy(sentenceWords);
+        Double per = Math.pow(2.0,entr);
+        return per;
+    }
+
     private void bigram(String[] sentenceWords) {
         System.out.println("w_i \tw:(i+1) \tC(w_i,w_i+1) \tC(w_i) \t\tP(w_i+1|w_i)");
 
@@ -112,7 +127,7 @@ public class SentenceProbability {
                 nextWord = sentenceWords[i+1];
 
             int occurencesOfWord = countBigram(sentenceWords[i], nextWord);
-            Double prob = probabilityOfBigram(occurencesOfWord);
+            Double prob = probabilityOfBigram(sentenceWords[i], nextWord);
             boolean hasBackof = false;
             if(occurencesOfWord == 0){
                 hasBackof = true;
@@ -153,9 +168,10 @@ public class SentenceProbability {
         }
     }
 
-    Double probabilityOfBigram(int nbrOfOccurencesOfWord){
-            Double nbr = new Double(nbrOfOccurencesOfWord);
-            Double total = new Double(bigramCounts.size());
-            return nbr/ total;
+    Double probabilityOfBigram(String w1, String w2) {
+        Double nbr = new Double(countBigram(w1, w2));
+        Double total = new Double(nbrOfWords);
+        Double probw1 = probabilityOfUnigram(countOfWord(w1));
+        return (nbr / total) / probw1;
     }
 }
