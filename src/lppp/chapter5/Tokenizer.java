@@ -1,6 +1,7 @@
 package lppp.chapter5;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 /**
  * Created by Pierre Nugues on 25/07/15.
@@ -17,9 +18,9 @@ public class Tokenizer {
         }
     }
 
-    String[] tokenize(String text) {
-        //String [] words = text.split("[\\s\\-,;:!?.’\'«»()–...&‘’“”*—]+");
-        //String [] words = text.split("[^a-zåàâäæçéèêëîïôöœßùûüÿA-ZÅÀÂÄÆÇÉÈÊËÎÏÔÖŒÙÛÜŸ’\\-]+");
+    public String[] tokenize(String text) {
+        //String [] words = text.split("[\\s\\-,;:!?.ï¿½\'ï¿½ï¿½()ï¿½...&ï¿½ï¿½ï¿½ï¿½*ï¿½]+");
+        //String [] words = text.split("[^a-zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½A-Zï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÖŒï¿½ï¿½ÜŸï¿½\\-]+");
         //String [] words = text.split("\\W+"); // Not unicode friendly
         String[] words = text.split("\\P{L}+");
         return words;
@@ -29,4 +30,5 @@ public class Tokenizer {
         String words = text.replaceAll("\\P{L}+", " ");
         return words;
     }
+
 }

@@ -29,7 +29,7 @@ public class WordCounter {
         }
     }
 
-    Map<String, Integer> count(String[] words) {
+    public Map<String, Integer> count(String[] words) {
         Map<String, Integer> counts = new TreeMap<>();
         for (String word : words) {
             if (counts.get(word) == null) {
@@ -41,7 +41,7 @@ public class WordCounter {
         return counts;
     }
 
-    Map<String, Integer> countBigrams(String[] words) {
+    public Map<String, Integer> countBigrams(String[] words) {
         Map<String, Integer> counts = new TreeMap<>();
         for (int i = 0; i < words.length - 1; i++) {
             String bigram = words[i] + "\t" + words[i + 1];
