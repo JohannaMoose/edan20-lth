@@ -1,5 +1,7 @@
 package lppp.labb3.format;
 
+import lppp.labb3.mlchunker.Features;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,6 +96,30 @@ public class ReaderWriterCoNLL2000 {
         }
 
         writer.close();
+    }
+
+    public void saveARFFMulti(File file, List<Features> featureList) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8"));
+        String chunk;
+        writer.write(Constants.ARFF_HEADER_MULTI);
+        for (Features features : featureList) {
+            chunk = features.getChunk();
+            writer.write(escape(features.getPpos_1()) + ", " +
+                    escape(features.getPpos()) + ", " +
+                    escape(features.getPpos1()) + ", " +
+                    chunk + "\n");
+        }
+
+        writer.close();
+    }
+
+    String escape(String s) {
+        if (s.equals(","))
+            return "\",\"" ;
+        else if (s.equals("''"))
+            return "\"''\"";
+        else
+            return s;
     }
 
     List<WordCoNLL2000> getSentence(int index) {

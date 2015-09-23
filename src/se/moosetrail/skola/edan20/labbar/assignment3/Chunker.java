@@ -23,7 +23,12 @@ public class Chunker extends Corpus {
     // This method counts the associations (POS, Chunk). It uses a hashmap.
     public void countAssoc() {
         associationFreq = new HashMap<Features, Integer>();
-        // Complete code here.
+        for (Features feat : featureList){
+            if(associationFreq.get(feat) == null)
+                associationFreq.put(feat, 1);
+            else
+                associationFreq.put(feat, associationFreq.get(feat) + 1);
+        }
     }
 
     public void printAssocCounts() {
@@ -35,8 +40,10 @@ public class Chunker extends Corpus {
 
     public void printBestAssoc() {
         Set<String> pposs = new HashSet<String>(bestAssociations.keySet());
+        int counte = 1;
         for (String ppos : pposs) {
-            System.out.println(ppos + "\t\t" + bestAssociations.get(ppos));
+            System.out.println(counte + ". " + ppos + "\t\t" + bestAssociations.get(ppos));
+            counte++;
         }
     }
 
@@ -53,15 +60,31 @@ public class Chunker extends Corpus {
     public void selectBestAssoc() {
         bestAssociations = new HashMap<String, String>();
         System.out.println(uniquePosTags.size() + " POS tags\t" + uniqueChunkTags.size() + " chunk tags");
-        // Complete code here.
+
+        for (String pos : uniquePosTags){
+            int highestCount = 0;
+            String chunk = null;
+            Iterator it = associationFreq.entrySet().iterator();
+            while (it.hasNext()){
+                Map.Entry pair = (Map.Entry)it.next();
+                Features fet = (Features)pair.getKey();
+                int count = (int) pair.getValue();
+                if(fet.getPpos() == pos && count > highestCount){
+                    highestCount = count;
+                    chunk = fet.getChunk();
+                }
+            }
+            bestAssociations.put(pos, chunk);
+        }
     }
 
     // This method tags the words with their chunk.
     public void tag() {
         for (List<WordCoNLL2000> sent : sentenceList) {
-            // Modify code here.
             for (WordCoNLL2000 word : sent) {
-                word.setChunk("");
+                String chunk = bestAssociations.get(word.getPpos());
+                word.setChunk(chunk);
+                String str = "";
             }
         }
     }

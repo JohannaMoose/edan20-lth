@@ -41,6 +41,23 @@ public class Corpus {
         }
     }
 
+    public void extractFeatures() {
+        featureList = new ArrayList<Features>();
+        String prevWord = null, currWord = null, nextWord = null, currChunk = null;
+        for (List<WordCoNLL2000> sentence : sentenceList) {
+            for (WordCoNLL2000 word : sentence) {
+                nextWord = word.getPpos();
+                if (currWord != null && prevWord != null && nextWord != null && currChunk != null) {
+                    featureList.add(new Features(currWord, currChunk, prevWord, nextWord));
+                }
+                currChunk = word.getChunk();
+                prevWord = currWord;
+                currWord = nextWord;
+            }
+
+        }
+    }
+
     public void printFeatures() {
         System.out.println(featureList.size());
         for (Features features : featureList) {

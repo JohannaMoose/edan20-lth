@@ -9,6 +9,8 @@ import lppp.labb3.format.WordCoNLL2000;
 public class Features {
 
     String ppos;
+    String ppos_1;
+    String ppos1;
     String chunk;
 
     public Features(WordCoNLL2000 word) {
@@ -16,9 +18,11 @@ public class Features {
         chunk = word.getChunk();
     }
 
-    public Features(String ppos, String chunk) {
+    public Features(String ppos, String chunk, String ppos_1, String ppos1) {
         this.ppos = ppos;
         this.chunk = chunk;
+        this.ppos_1 = ppos_1;
+        this.ppos1 = ppos1;
     }
 
     public boolean equals(Object features) {
@@ -33,6 +37,14 @@ public class Features {
 
     public String getPpos() {
         return ppos;
+    }
+
+    public String getPpos1() {
+        return ppos1;
+    }
+
+    public String getPpos_1() {
+        return ppos_1;
     }
 
     public String getChunk() {
